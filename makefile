@@ -4,3 +4,5 @@ FILES = smc.c
 
 smc:
 	$(CC) $(FLAGS) $(FILES)
+
+.PHONY: smc

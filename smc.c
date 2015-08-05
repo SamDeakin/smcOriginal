@@ -400,7 +400,15 @@ int main(int argc, char *argv[])
                 op = OP_READ_FAN;
                 break;
             case 'k':
-                strncpy(key, optarg, sizeof(key));   //fix for buffer overflow
+            {
+                size_t length = strlen(optarg);
+                if (length <= 4) {
+                    strncpy(key, optarg, sizeof(key));
+                } else {
+                    printf("Error: keys are 4 chars or less\n");
+                    return 1;
+                }
+            }
                 break;
             case 'l':
                 op = OP_LIST;
