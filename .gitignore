@@ -2,6 +2,10 @@
 #################
 smc
 
+# Project Files (Add IDE Created Files Here) #
+##############################################
+.idea/*
+
 # Compiled source #
 ###################
 *.com
