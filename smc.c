@@ -29,6 +29,30 @@
 
 static io_connect_t conn;
 
+// translate hex to int
+int _hexToInt(char hex) {
+    if (hex >= '0' && hex <= '9') {
+        return hex - '0';
+    } else if (hex >= 'A' && hex <= 'F') {
+        return hex - 'A' + 10;
+    } else if (hex >= 'a' && hex <= 'f') {
+        return hex - 'a' + 10;
+    } else {
+        // We shouldn't get here
+        return 0;
+    }
+}
+
+// get the exponent length from a datatype string
+int _fpspGetExponent(char *str) {
+
+}
+
+// get the significand length from a datatype string
+int _fpspGetSignificand(char *str) {
+
+}
+
 UInt32 _strtoul(char *str, int size, int base)
 {
     UInt32 total = 0;
