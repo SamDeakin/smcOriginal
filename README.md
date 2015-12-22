@@ -12,6 +12,13 @@ Types preceded with { are usually structures.
 
 | Data Name | Data Type | Explanation |
 | ------ | ------ | ------ |
+| [ch8*] | String of 8 bit characters | Not necessarily words or null terminated |
+| [flag] | Bit flag | |
+| [fpXX] | 16 bit unsigned fixed point | Each X is one hex number. First X is the number of digits before the decimal, second X is the number after |
+| [hex_] | Hexadecimal number? | Length of data will vary |
+| [siXX] | signed int | signed int of length XX. Eg. [si8 ]=8 bits, [si16]=16 bits |
+| [spXX] | 16 bit signed point | same as [fpXX] but with one sign bit at the front |
+| [uiXX] | unsigned int | unsigned int of length XX. Eg. [ui8 ]=8 bits, [ui32]=32 bits |
 | [{alc] | | |
 | [{ali] | | |
 | [{alp] | | |
@@ -23,10 +30,3 @@ Types preceded with { are usually structures.
 | [{lks] | | |
 | [{mss] | | |
 | [{rev] | | |
-| [ch8*] | String of 8 bit characters | Not necessarily words or null terminated |
-| [flag] | Bit flag | |
-| [fpXX] | 16 bit unsigned floating point | Each X is one hex number. First X is exponent, second is significand |
-| [hex_] | Hexadecimal number? | Length of data will vary |
-| [siXX] | signed int | signed int of length XX. Eg. [si8 ]=8 bits, [si16]=16 bits |
-| [spXX] | 16 bit signed floating point | same as [fpXX] but with one sign bit at the front |
-| [uiXX] | unsigned int | unsigned int of length XX. Eg. [ui8 ]=8 bits, [ui32]=32 bits |

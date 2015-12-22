@@ -43,26 +43,17 @@ int _hexToInt(char hex) {
     }
 }
 
-// get the exponent length from a datatype string
-UInt32 _fpspGetExponent(char size, UInt32 val, bool signedBit) {
-
-}
-
-// get the significand length from a datatype string
-UInt32 _fpspGetSignificand(char size, UInt32 val) {
-
-}
-
 // get the full floating point value
 float _fpspGetValue(char *str, UInt32 val) {
     // We don't touch str[1] because it will always be 'p'
 
     // str is always 4 chars so we may treat is as an array of size 4
-    UInt32 signedBit = (str[0] == 's');
+    UInt32 beforePoint = _hexToInt(str[2]);
+    UInt32 afterPoint = _hexToInt(str[3]);
 
-    UInt32 exponent = _fpspGetExponent(str[2], val, signedBit);
-    UInt32 significand = _fpspGetSignificand(str[3], val);
-
+    if (str[0] == 's') {
+        
+    }
     
 }
 
