@@ -46,15 +46,22 @@ int _hexToInt(char hex) {
 // get the full floating point value
 float _fpspGetValue(char *str, UInt32 val) {
     // We don't touch str[1] because it will always be 'p'
-
     // str is always 4 chars so we may treat is as an array of size 4
-    UInt32 beforePoint = _hexToInt(str[2]);
+    //UInt32 beforePoint = _hexToInt(str[2]);
     UInt32 afterPoint = _hexToInt(str[3]);
+    float result = 0;
 
+    // put val into the result
     if (str[0] == 's') {
-        
+        // TODO how are negative numbers stored?
+        // Fail to 0 for now
+    } else {
+        result = val;
     }
-    
+
+    // shift val to the correct decimal place
+    result /= (1 << afterPoint);
+    return result;
 }
 
 UInt32 _strtoul(char *str, int size, int base)
