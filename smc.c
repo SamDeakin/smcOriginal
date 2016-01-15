@@ -126,6 +126,16 @@ void printBytesHex(SMCVal_t val)
     printf(")\n");
 }
 
+bool isFloat(char* c) {
+    if ((c[0] == 's' || c[0] == 'f') &&
+        c[1] == 'p' &&
+        ((c[2] <= '9' && c[2] >= '0') || (c[2] <= 'f' && c[2] >= 'a')) &&
+        ((c[3] <= '9' && c[3] >= '0') || (c[3] <= 'f' && c[3] >= 'a'))) {
+        return true;
+    }
+    return false;
+}
+
 void printVal(SMCVal_t val)
 {
     printf("  %-4s  [%-4s]  ", val.key, val.dataType);
