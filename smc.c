@@ -53,10 +53,9 @@ float _fpspGetValue(char *str, UInt32 val) {
 
     // put val into the result
     if (str[0] == 's') {
-        // TODO how are negative numbers stored?
-        // Fail to 0 for now
+        result = (val & 0x7FFF) * ((val & 0x8000) ? -1 : 1);
     } else {
-        result = val;
+        result = (val & 0xFFFF);
     }
 
     // shift val to the correct decimal place
