@@ -19,14 +19,11 @@ Types preceded with { are usually structures.
 | [siXX] | signed int | signed int of length XX. Eg. [si8 ]=8 bits, [si16]=16 bits |
 | [spXX] | 16 bit signed point | same as [fpXX] but with one sign bit at the front |
 | [uiXX] | unsigned int | unsigned int of length XX. Eg. [ui8 ]=8 bits, [ui32]=32 bits |
-| [{alc] | | |
-| [{ali] | | |
-| [{alp] | | |
-| [{alv] | | |
-| [{fds] | | |
-| [{hdi] | | |
-| [{lim] | | |
+| [{alC] | struct | Structure related to the analog light sensors. 'C' is one of 'a', 'c', 'i', 'p', 'r', 't', 'v'. 'a' is calculation information. 'c' is configuration. 'i' is sensor information. 'p' is unknown. 'r' is thermal coefficient and baseline temperature. 't' is the calculation threshold. 'v' is the latest reading from the sensor. |
+| [{fds] | struct | Fan description |
+| [{hdi] | struct | Unknown. Probably related to a hard drive. |
+| [{lim] | struct | Has to do with plimits between SMC and OS |
 | [{lkb] | | |
 | [{lks] | | |
-| [{mss] | | |
-| [{rev] | | |
+| [{mss] | enumeration | Enumerated state of the SMC's state machine. |
+| [{rev] | | Revision number. |
