@@ -30,7 +30,7 @@
 static io_connect_t conn;
 
 // translate hex to int
-int _hexToInt(char hex) {
+UInt32 _hexToInt(char hex) {
     if (hex >= '0' && hex <= '9') {
         return hex - '0';
     } else if (hex >= 'A' && hex <= 'F') {
@@ -44,22 +44,32 @@ int _hexToInt(char hex) {
 }
 
 // get the full floating point value
-float _fpspGetValue(char *str, UInt32 val) {
-    // We don't touch str[1] because it will always be 'p'
-    // str is always 4 chars so we may treat is as an array of size 4
+float _fpspGetValue(char *str, UInt32 size, UInt32Char_t type) {
+    // We don't touch type[1] because it will always be 'p'
+    // type is always 4 chars + null terminator so we may treat it as an array of size 4
     //UInt32 beforePoint = _hexToInt(str[2]);
-    UInt32 afterPoint = _hexToInt(str[3]);
+    UInt32 afterPoint = _hexToInt(type[3]);
     float result = 0;
 
-    // put val into the result
-    if (str[0] == 's') {
-        result = (val & 0x7FFF) * ((val & 0x8000) ? -1 : 1);
+    // For keeping track of the sign bit on signed numbers
+    int mult = 1;
+
+    // First character
+    if (type[0] == 's') {
+        mult = -1;
+        result = str[0] & 0x7; // Ignore first bit
     } else {
-        result = (val & 0xFFFF);
+        result = (unsigned char)str[0]; // Cast to unsigned in case the first bit is 1
+    }
+    
+    for (int i = 1; i < size; i++) {
+        result *= 1 << 8; // Shift result by 8 bits
+        result += (unsigned char)str[i];
     }
 
-    // shift val to the correct decimal place
+    // shift val to the correct decimal place and correct for sign
     result /= (1 << afterPoint);
+    result *= mult;
     return result;
 }
 
@@ -111,6 +121,11 @@ void printFPE2(SMCVal_t val)
     printf("%.0f ", _strtof(val.bytes, val.dataSize, 2));
 }
 
+void printFloat(SMCVal_t val)
+{
+    printf("%.0f ", _fpspGetValue(val.bytes, val.dataSize, val.dataType));
+}
+
 void printUInt(SMCVal_t val)
 {
     printf("%u ", (unsigned int) _strtoul(val.bytes, val.dataSize, 10));
@@ -126,7 +141,8 @@ void printBytesHex(SMCVal_t val)
     printf(")\n");
 }
 
-bool isFloat(char* c) {
+bool isFloat(char* c) 
+{
     if ((c[0] == 's' || c[0] == 'f') &&
         c[1] == 'p' &&
         ((c[2] <= '9' && c[2] >= '0') || (c[2] <= 'f' && c[2] >= 'a')) &&
@@ -145,8 +161,14 @@ void printVal(SMCVal_t val)
             (strcmp(val.dataType, DATATYPE_UINT16) == 0) ||
             (strcmp(val.dataType, DATATYPE_UINT32) == 0))
             printUInt(val);
-        else if (strcmp(val.dataType, DATATYPE_FPE2) == 0)
+        else if (strcmp(val.dataType, DATATYPE_FPE2) == 0) {
+            // Just for testing print new and old
             printFPE2(val);
+            printFloat(val);
+        }
+        else if (isFloat(val.dataType)) {
+            printFloat(val);
+        }
 
         printBytesHex(val);
     }
